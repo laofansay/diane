@@ -1,0 +1,195 @@
+
+application {
+  config {
+    baseName iantha
+    applicationType monolith
+    packageName com.laofan
+    authenticationType jwt
+    prodDatabaseType postgres
+    clientFramework react
+  }
+  entities *
+}
+
+
+
+
+/**购物车**/
+entity Cart {
+  ident Long required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+/**购物项目**/
+entity CartItem {
+  cartId String required,
+  productId String required,
+  count Integer required
+}
+
+
+/**品牌**/
+entity Brand {
+  title String required unique,
+  description String,
+  logo String
+}
+
+entity Product {
+  title String required,
+  description String,
+  images String required,
+  keywords String,
+  metadata Json,
+   required,
+  discount Float required,
+  stock Integer required,
+  isPhysical Boolean required,
+  isAvailable Boolean required,
+  isFeatured Boolean required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity Category {
+  title String required unique,
+  description String,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity ProductReview {
+  text String required,
+  rating Integer required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity Order {
+  number Integer required unique,
+  status String required,
+  total Float required,
+  shipping Float required,
+  payable Float required,
+  tax Float required,
+  discount Float required,
+  isPaid Boolean required,
+  isCompleted Boolean required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity OrderItem {
+  orderId String required,
+  productId String required,
+  count Integer required,
+  price Float required,
+  discount Float required
+}
+
+entity Address {
+  country String required,
+  address String required,
+  city String required,
+  phone String required,
+  postalCode String required,
+  createdAt Instant required
+}
+
+entity Notification {
+  content String required,
+  isRead Boolean required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity DiscountCode {
+  code String required unique,
+  stock Integer required,
+  description String,
+  percent Integer required,
+  maxDiscountAmount Float required,
+  startDate Instant required,
+  endDate Instant required,
+  createdAt Instant required
+}
+
+entity Refund {
+  amount Float required,
+  reason String required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity Payment {
+  number Integer required unique,
+  status String required,
+  refId String required unique,
+  cardPan String,
+  cardHash String,
+  fee Float,
+  isSuccessful Boolean required,
+  payable Float required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity PaymentProvider {
+  title String required unique,
+  description String,
+  websiteUrl String,
+  isActive Boolean required
+}
+
+entity Error {
+  error String required,
+  createdAt Instant required
+}
+
+entity File {
+  url String required,
+  createdAt Instant required
+}
+
+entity Blog {
+  slug String required,
+  title String required,
+  image String required,
+  description String required,
+  content String,
+  categories String[],
+  keywords String[],
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+entity Banner {
+  label String required,
+  image String required,
+  createdAt Instant required,
+  updatedAt Instant required
+}
+
+// Relationships
+relationship ManyToOne {
+  User{cart} to Cart{user}
+  Cart{items} to CartItem{cart}
+  CartItem{product} to Product{cartItems}
+  User{wishlist} to Product{wishlists}
+  User{orders} to Order{user}
+  Order{orderItems} to OrderItem{order}
+  Product{productReviews} to ProductReview{product}
+  ProductReview{user} to User{productReviews}
+  Order{address} to Address{orders}
+  User{notifications} to Notification{user}
+  User{files} to File{user}
+  Author{blogs} to Blog{author}
+  Brand{products} to Product{brand}
+  Category{products} to Product{categories}
+  Order{refund} to Refund{order}
+  Payment{order} to Order{payments}
+  Payment{provider} to PaymentProvider{orders}
+  DiscountCode{order} to Order{discountCode}
+}
+
