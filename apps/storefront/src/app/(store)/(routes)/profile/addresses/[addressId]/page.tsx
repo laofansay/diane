@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 
 import { AddressForm } from './components/address-form'
 
@@ -7,11 +6,7 @@ export default async function AddressPage({
 }: {
    params: { addressId: string }
 }) {
-   const address = await prisma.address.findUnique({
-      where: {
-         id: params.addressId,
-      },
-   })
+   const address =[]
 
    return (
       <div className="flex-col">

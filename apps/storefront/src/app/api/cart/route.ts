@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
@@ -9,21 +8,7 @@ export async function GET(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const cart = await prisma.cart.findUniqueOrThrow({
-         where: { userId },
-         include: {
-            items: {
-               include: {
-                  product: {
-                     include: {
-                        brand: true,
-                        categories: true,
-                     },
-                  },
-               },
-            },
-         },
-      })
+      const cart ={}
 
       return NextResponse.json(cart)
    } catch (error) {
@@ -43,55 +28,12 @@ export async function POST(req: Request) {
       const { productId, count } = await req.json()
 
       if (count < 1) {
-         await prisma.cartItem.delete({
-            where: { UniqueCartItem: { cartId: userId, productId } },
-         })
+        
       } else {
-         await prisma.cart.upsert({
-            where: {
-               userId,
-            },
-            create: {
-               user: {
-                  connect: {
-                     id: userId,
-                  },
-               },
-            },
-            update: {
-               items: {
-                  upsert: {
-                     where: {
-                        UniqueCartItem: {
-                           cartId: userId,
-                           productId,
-                        },
-                     },
-                     update: {
-                        count,
-                     },
-                     create: {
-                        productId,
-                        count,
-                     },
-                  },
-               },
-            },
-         })
+        
       }
 
-      const cart = await prisma.cart.findUniqueOrThrow({
-         where: {
-            userId,
-         },
-         include: {
-            items: {
-               include: {
-                  product: true,
-               },
-            },
-         },
-      })
+      const cart = {}
 
       return NextResponse.json(cart)
    } catch (error) {

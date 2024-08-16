@@ -7,23 +7,14 @@ import Carousel from '@/components/native/Carousel'
 import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
 import { Heading } from '@/components/native/heading'
 import { Separator } from '@/components/native/separator'
-import prisma from '@/lib/prisma'
 import { isVariableValid } from '@/lib/utils'
 
 export default async function Index() {
-   const products = await prisma.product.findMany({
-      include: {
-         brand: true,
-         categories: true,
-      },
-   })
+   const products = [];
 
-   const blogs = await prisma.blog.findMany({
-      include: { author: true },
-      take: 3,
-   })
+   const blogs =[];
 
-   const banners = await prisma.banner.findMany()
+   const banners = [];
 
    return (
       <div className="flex flex-col border-neutral-200 dark:border-neutral-700">

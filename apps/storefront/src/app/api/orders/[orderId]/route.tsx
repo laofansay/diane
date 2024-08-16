@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(
@@ -16,28 +15,7 @@ export async function GET(
          return new NextResponse('orderId is required', { status: 400 })
       }
 
-      const order = await prisma.order.findUniqueOrThrow({
-         where: {
-            userId,
-            id: params.orderId,
-         },
-         include: {
-            address: true,
-            discountCode: true,
-            user: true,
-            payments: {
-               include: {
-                  provider: true,
-               },
-            },
-            orderItems: {
-               include: {
-                  product: { include: { brand: true, categories: true } },
-               },
-            },
-            refund: true,
-         },
-      })
+      const order = {}
 
       return NextResponse.json(order)
    } catch (error) {

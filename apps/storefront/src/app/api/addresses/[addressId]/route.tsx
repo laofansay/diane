@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(
@@ -16,12 +15,8 @@ export async function GET(
          return new NextResponse('addressId is required', { status: 400 })
       }
 
-      const address = await prisma.address.findUniqueOrThrow({
-         where: {
-            userId,
-            id: params.addressId,
-         },
-      })
+      const address = {}
+
 
       return NextResponse.json(address)
    } catch (error) {

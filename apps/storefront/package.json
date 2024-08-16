@@ -1,5 +1,5 @@
 {
-   "name": "next-prisma-tailwind-ecommerce",
+   "name": "next-tailwind-ecommerce",
    "author": {
       "name": "Amirhossein Mohammadi",
       "url": "https://github.com/accretence"
@@ -7,18 +7,11 @@
    "license": "MIT",
    "scripts": {
       "yarn": "yarn",
-      "dev": "next dev -p 7777",
+      "dev": "next dev -p 9000",
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
-      "postinstall": "prisma generate",
-      "update": "npx npm-check-updates -u",
-      "db:generate": "npx prisma generate",
-      "db:format": "npx prisma format",
-      "db:reset": "npx prisma db push --force-reset",
-      "db:push": "npx prisma db push",
-      "db:seed": "npx prisma db seed",
-      "db:studio": "npx prisma studio"
+      "update": "npx npm-check-updates -u"
    },
    "dependencies": {
       "@hookform/resolvers": "^3.9.0",
@@ -27,7 +20,6 @@
       "@persepolis/rng": "^0.0.1",
       "@persepolis/slugify": "^0.0.1",
       "@persepolis/sms": "^0.0.1",
-      "@prisma/client": "^5.17.0",
       "@radix-ui/react-accordion": "^1.2.0",
       "@radix-ui/react-alert-dialog": "^1.1.1",
       "@radix-ui/react-avatar": "^1.1.0",
@@ -46,11 +38,14 @@
       "@radix-ui/react-toggle": "^1.1.0",
       "@react-email/components": "^0.0.22",
       "@react-email/render": "^0.0.17",
+      "@reduxjs/toolkit": "^2.2.6",
       "@tanstack/react-table": "^8.19.3",
+      "axios": "^1.7.4",
       "class-variance-authority": "^0.7.0",
       "clsx": "^2.1.1",
       "cmdk": "^1.0.0",
       "date-fns": "^3.6.0",
+      "dayjs": "^1.11.12",
       "embla-carousel-autoplay": "^8.1.7",
       "embla-carousel-react": "^8.1.7",
       "jose": "^5.6.3",
@@ -64,6 +59,10 @@
       "react-dom": "18.3.1",
       "react-hook-form": "^7.52.1",
       "react-hot-toast": "^2.4.1",
+      "react-jhipster": "^0.25.3",
+      "react-redux": "^9.1.2",
+      "reactstrap": "^9.2.2",
+      "redux-persist": "^6.0.0",
       "swr": "^2.2.5",
       "zod": "^3.23.8"
    },
@@ -77,7 +76,6 @@
       "postcss": "^8.4.39",
       "prettier": "^3.3.3",
       "prettier-plugin-tailwindcss": "^0.6.5",
-      "prisma": "^5.17.0",
       "tailwind-merge": "^2.4.0",
       "tailwindcss": "^3.4.6",
       "tailwindcss-animate": "^1.0.7",

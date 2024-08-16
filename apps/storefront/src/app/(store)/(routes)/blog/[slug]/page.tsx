@@ -1,6 +1,5 @@
 import MDXComponents from '@/components/native/mdx/MDXComponents'
 import { Separator } from '@/components/native/separator'
-import prisma from '@/lib/prisma'
 import { format, parseISO } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -8,19 +7,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function Blog({ params }: { params: { slug: string } }) {
-   const blog = await prisma.blog.findUnique({
-      where: {
-         slug: params.slug,
-      },
-      include: { author: true },
-   })
+   const blog = []
 
-   const recommendations = await prisma.blog.findMany({
-      include: { author: true },
-      take: 3,
-   })
+   const recommendations = []
 
-   const mdx = await serialize(blog.content)
+   const mdx = []
 
    return (
       <div className="grid grid-cols-1 gap-3 md:grid-cols-4">

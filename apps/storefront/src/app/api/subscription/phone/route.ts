@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
@@ -9,14 +8,7 @@ export async function POST(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const user = await prisma.user.update({
-         where: {
-            id: userId,
-         },
-         data: {
-            isPhoneSubscribed: true,
-         },
-      })
+      const user = {}
 
       return NextResponse.json({
          phone: user.phone,
@@ -36,14 +28,7 @@ export async function DELETE(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const user = await prisma.user.update({
-         where: {
-            id: userId,
-         },
-         data: {
-            isPhoneSubscribed: false,
-         },
-      })
+      const user = {}
 
       return NextResponse.json({
          phone: user.phone,

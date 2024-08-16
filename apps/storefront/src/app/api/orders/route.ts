@@ -1,6 +1,5 @@
 import config from '@/config/site'
 import Mail from '@/emails/order_notification_owner'
-import prisma from '@/lib/prisma'
 import { sendMail } from '@persepolis/mail'
 import { render } from '@react-email/render'
 import { NextResponse } from 'next/server'
@@ -13,17 +12,7 @@ export async function GET(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const orders = await prisma.order.findMany({
-         where: {
-            userId,
-         },
-         include: {
-            address: true,
-            payments: true,
-            refund: true,
-            orderItems: true,
-         },
-      })
+      const orders = []
 
       return NextResponse.json(orders)
    } catch (error) {
@@ -43,70 +32,18 @@ export async function POST(req: Request) {
       const { addressId, discountCode } = await req.json()
 
       if (discountCode) {
-         await prisma.discountCode.findUniqueOrThrow({
-            where: {
-               code: discountCode,
-               stock: {
-                  gte: 1,
-               },
-            },
-         })
+        
       }
 
-      const cart = await prisma.cart.findUniqueOrThrow({
-         where: {
-            userId,
-         },
-         include: {
-            items: {
-               include: {
-                  product: true,
-               },
-            },
-         },
-      })
+      const cart = {}
 
       const { tax, total, discount, payable } = calculateCosts({ cart })
 
-      const order = await prisma.order.create({
-         data: {
-            user: {
-               connect: {
-                  id: userId,
-               },
-            },
-            status: 'Processing',
-            total,
-            tax,
-            payable,
-            discount,
-            shipping: 0,
-            address: {
-               connect: { id: addressId },
-            },
-            orderItems: {
-               create: cart?.items.map((orderItem) => ({
-                  count: orderItem.count,
-                  price: orderItem.product.price,
-                  discount: orderItem.product.discount,
-                  product: {
-                     connect: {
-                        id: orderItem.productId,
-                     },
-                  },
-               })),
-            },
-         },
-      })
+      const order ={} 
 
-      const owners = await prisma.owner.findMany()
+      const owners = []
 
-      const notifications = await prisma.notification.createMany({
-         data: owners.map((owner) => ({
-            userId: owner.id,
-            content: `Order #${order.number} was created was created with a value of $${payable}.`,
-         })),
-      })
+      const notifications = {}
 
       for (const owner of owners) {
          await sendMail({

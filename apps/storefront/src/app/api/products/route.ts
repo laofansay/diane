@@ -1,14 +1,8 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
    try {
-      const products = await prisma.product.findMany({
-         include: {
-            brand: true,
-            categories: true,
-         },
-      })
+      const products = []
 
       return NextResponse.json(products)
    } catch (error) {

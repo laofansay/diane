@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
@@ -9,10 +8,7 @@ export async function GET(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const user = await prisma.user.findUniqueOrThrow({
-         where: { id: userId },
-         include: { wishlist: true },
-      })
+      const user = []
 
       return NextResponse.json(user.wishlist)
    } catch (error) {
@@ -31,17 +27,7 @@ export async function POST(req: Request) {
 
       const { productId } = await req.json()
 
-      const user = await prisma.user.update({
-         where: { id: userId },
-         data: {
-            wishlist: {
-               connect: {
-                  id: productId,
-               },
-            },
-         },
-         include: { wishlist: true },
-      })
+      const user = {}
 
       return NextResponse.json(user.wishlist)
    } catch (error) {
@@ -60,17 +46,7 @@ export async function DELETE(req: Request) {
 
       const { productId } = await req.json()
 
-      const user = await prisma.user.update({
-         where: { id: userId },
-         data: {
-            wishlist: {
-               disconnect: {
-                  id: productId,
-               },
-            },
-         },
-         include: { wishlist: true },
-      })
+      const user = {};
 
       return NextResponse.json(user.wishlist)
    } catch (error) {

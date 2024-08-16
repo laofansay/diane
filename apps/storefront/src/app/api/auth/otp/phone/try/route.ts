@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
 import { isIranianPhoneNumberValid } from '@persepolis/regex'
@@ -14,16 +13,7 @@ export async function POST(req: NextRequest) {
 
       // Use isPhoneNumberValid if international
       if (isIranianPhoneNumberValid(phone)) {
-         await prisma.user.upsert({
-            where: { phone: phone.toString().toLowerCase() },
-            update: {
-               OTP,
-            },
-            create: {
-               phone: phone.toString().toLowerCase(),
-               OTP,
-            },
-         })
+        
 
          await sendTransactionalSMS({
             Mobile: phone,

@@ -1,5 +1,4 @@
 import { signJWT } from '@/lib/jwt'
-import prisma from '@/lib/prisma'
 import { getErrorResponse } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
@@ -20,37 +19,6 @@ export async function POST(req: NextRequest) {
          for (const item of cart.items) {
             const { count, productId } = item
 
-            await prisma.cart.upsert({
-               where: {
-                  userId: user.id,
-               },
-               create: {
-                  user: {
-                     connect: {
-                        id: user.id,
-                     },
-                  },
-               },
-               update: {
-                  items: {
-                     upsert: {
-                        where: {
-                           UniqueCartItem: {
-                              cartId: user.id,
-                              productId,
-                           },
-                        },
-                        update: {
-                           count,
-                        },
-                        create: {
-                           productId,
-                           count,
-                        },
-                     },
-                  },
-               },
-            })
          }
       }
 

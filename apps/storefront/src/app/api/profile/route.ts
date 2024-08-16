@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
@@ -9,22 +8,7 @@ export async function GET(req: Request) {
          return new NextResponse('Unauthorized', { status: 401 })
       }
 
-      const user = await prisma.user.findUniqueOrThrow({
-         where: { id: userId, isEmailVerified: true },
-         include: {
-            cart: {
-               include: {
-                  items: {
-                     include: {
-                        product: true,
-                     },
-                  },
-               },
-            },
-            addresses: true,
-            wishlist: true,
-         },
-      })
+      const user = {}
 
       return NextResponse.json({
          phone: user.phone,

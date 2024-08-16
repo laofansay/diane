@@ -1,7 +1,6 @@
 import { ProductGrid, ProductSkeletonGrid } from '@/components/native/Product'
 import { Heading } from '@/components/native/heading'
 import { Separator } from '@/components/native/separator'
-import prisma from '@/lib/prisma'
 import { isVariableValid } from '@/lib/utils'
 
 import {
@@ -16,34 +15,9 @@ export default async function Products({ searchParams }) {
 
    const orderBy = getOrderBy(sort)
 
-   const brands = await prisma.brand.findMany()
-   const categories = await prisma.category.findMany()
-   const products = await prisma.product.findMany({
-      where: {
-         isAvailable: isAvailable == 'true' || sort ? true : undefined,
-         brand: {
-            title: {
-               contains: brand,
-               mode: 'insensitive',
-            },
-         },
-         categories: {
-            some: {
-               title: {
-                  contains: category,
-                  mode: 'insensitive',
-               },
-            },
-         },
-      },
-      orderBy,
-      skip: (page - 1) * 12,
-      take: 12,
-      include: {
-         brand: true,
-         categories: true,
-      },
-   })
+   const brands = []
+   const categories =[]
+   const products = []
 
    return (
       <>

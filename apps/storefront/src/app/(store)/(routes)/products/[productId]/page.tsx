@@ -1,5 +1,4 @@
 import Carousel from '@/components/native/Carousel'
-import prisma from '@/lib/prisma'
 import { isVariableValid } from '@/lib/utils'
 import { ChevronRightIcon } from 'lucide-react'
 import type { Metadata, ResolvingMetadata } from 'next'
@@ -16,11 +15,7 @@ export async function generateMetadata(
    { params, searchParams }: Props,
    parent: ResolvingMetadata
 ): Promise<Metadata> {
-   const product = await prisma.product.findUnique({
-      where: {
-         id: params.productId,
-      },
-   })
+   const product =[]
 
    return {
       title: product.title,
@@ -37,15 +32,7 @@ export default async function Product({
 }: {
    params: { productId: string }
 }) {
-   const product = await prisma.product.findUnique({
-      where: {
-         id: params.productId,
-      },
-      include: {
-         brand: true,
-         categories: true,
-      },
-   })
+   const product = []
 
    if (isVariableValid(product)) {
       return (
