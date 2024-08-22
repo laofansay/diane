@@ -27,6 +27,12 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.next
+.history
+.github
+
+package.lock
+yarn.lock
 
 # vercel
 .vercel
