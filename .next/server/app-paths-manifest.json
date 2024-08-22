@@ -1,7 +1,9 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(store)/(routes)/profile/addresses/page": "app/(store)/(routes)/profile/addresses/page.js",
+  "/(store)/(routes)/profile/addresses/[addressId]/page": "app/(store)/(routes)/profile/addresses/[addressId]/page.js",
   "/(store)/(routes)/page": "app/(store)/(routes)/page.js",
   "/(store)/(routes)/profile/edit/page": "app/(store)/(routes)/profile/edit/page.js",
-  "/(store)/(routes)/profile/addresses/page": "app/(store)/(routes)/profile/addresses/page.js",
-  "/(store)/(routes)/profile/orders/page": "app/(store)/(routes)/profile/orders/page.js",
-  "/(store)/(routes)/profile/addresses/[addressId]/page": "app/(store)/(routes)/profile/addresses/[addressId]/page.js"
+  "/(store)/(routes)/cart/page": "app/(store)/(routes)/cart/page.js",
+  "/(store)/(routes)/products/page": "app/(store)/(routes)/products/page.js"
 }

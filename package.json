@@ -25,6 +25,7 @@
    },
    "dependencies": {
       "@hookform/resolvers": "^3.9.0",
+      "@nextui-org/react": "^2.4.6",
       "@persepolis/mail": "^1.0.7",
       "@persepolis/regex": "^0.0.3",
       "@persepolis/rng": "^0.0.1",
@@ -48,6 +49,7 @@
       "@radix-ui/react-switch": "^1.1.0",
       "@radix-ui/react-toast": "^1.2.1",
       "@radix-ui/react-toggle": "^1.1.0",
+      "@radix-ui/react-tooltip": "^1.1.2",
       "@react-email/components": "^0.0.22",
       "@react-email/render": "^0.0.17",
       "@reduxjs/toolkit": "^2.1.0",
@@ -60,6 +62,7 @@
       "dayjs": "1.11.11",
       "embla-carousel-autoplay": "^8.1.7",
       "embla-carousel-react": "^8.1.7",
+      "framer-motion": "^11.3.29",
       "jose": "^5.6.3",
       "lodash": "4.17.21",
       "lucide-react": "^0.414.0",

@@ -1,4 +1,4 @@
-// File: /Users/jeneryfan/job/caopin/dayou-fengxiang-backend/diane/src/app/(store)/(routes)/profile/edit/page.tsx
+// File: D:\code\diane\src\app\(store)\(routes)\profile\edit\page.tsx
 import * as entry from '../../../../../../../src/app/(store)/(routes)/profile/edit/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

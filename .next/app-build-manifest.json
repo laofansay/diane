@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(store)/(routes)/products/page": [
+    "/(store)/(routes)/profile/addresses/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/products/page.js"
+      "static/chunks/app/(store)/(routes)/profile/addresses/page.js"
     ],
     "/(store)/layout": [
       "static/chunks/webpack.js",
@@ -21,45 +21,40 @@
       "static/chunks/main-app.js",
       "static/chunks/app/loading.js"
     ],
-    "/(store)/(routes)/page": [
+    "/(store)/(routes)/profile/addresses/[addressId]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/page.js"
-    ],
-    "/(store)/(routes)/products/[productId]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/products/[productId]/page.js"
-    ],
-    "/(store)/(routes)/cart/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/cart/page.js"
+      "static/chunks/app/(store)/(routes)/profile/addresses/[addressId]/page.js"
     ],
     "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/login/page.js"
     ],
+    "/(store)/(routes)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(store)/(routes)/page.js"
+    ],
     "/(store)/(routes)/profile/edit/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(store)/(routes)/profile/edit/page.js"
     ],
-    "/(store)/(routes)/profile/orders/page": [
+    "/(store)/(routes)/cart/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/profile/orders/page.js"
+      "static/chunks/app/(store)/(routes)/cart/page.js"
     ],
-    "/(store)/(routes)/profile/addresses/page": [
+    "/(store)/(routes)/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/profile/addresses/page.js"
+      "static/chunks/app/(store)/(routes)/products/page.js"
     ],
-    "/(store)/(routes)/profile/addresses/[addressId]/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/profile/addresses/[addressId]/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }
