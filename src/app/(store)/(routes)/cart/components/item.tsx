@@ -17,7 +17,6 @@ import { useEffect, useState } from 'react'
 export const Item = ({ cartItem }) => {
 
    const { product } = cartItem
-   const [item, setItem] = useState(cartItem);
    const dispatch = useAppDispatch();
    //current product cart count;
    const updateSuccess = useAppSelector(state => state.cartItem.updateSuccess);
@@ -25,17 +24,17 @@ export const Item = ({ cartItem }) => {
 
    useEffect(() => {
       if (updateSuccess) {
-         setItem(cartItemEntity);
+         //setItem(cartItemEntity);
       }
    }, [updateSuccess]);
 
-   async function onAddToCart() {
+   async function onAddToCart(count: number) {
       try {
          const entity = {
             ...cartItem,
             prodId: product.id,
             cid: cartItem.cid,
-            count: item.count + 1
+            count: count
          };
          dispatch(createEntity(entity));
       } catch (error) {
@@ -43,14 +42,14 @@ export const Item = ({ cartItem }) => {
       }
    }
 
-   async function onRemoveFromCart() {
+   async function onRemoveFromCart(count: number) {
 
       try {
          const entity = {
             ...cartItem,
             prodId: product.id,
             cid: cartItem.cid,
-            count: item.count - 1
+            count: count
          };
          dispatch(createEntity(entity));
 
@@ -59,7 +58,7 @@ export const Item = ({ cartItem }) => {
       }
    }
 
-   function findLocalCartIndexById(array, productId) {
+   function findLocalCartIndexById(array: { length: number; items: { productId: any }[] }, productId: any) {
       for (let i = 0; i < array.length; i++) {
          if (array?.items[i]?.productId === productId) {
             return i
@@ -69,33 +68,33 @@ export const Item = ({ cartItem }) => {
    }
 
 
-   function CartButton() {
+   function CartButton({ count }) {
 
-      if (item.count === 0) {
-         return <Button onClick={onAddToCart}>🛒 Add to Cart</Button>
+      if (count === 0) {
+         return <Button onClick={() => onAddToCart(1)}>🛒 Add to Cart</Button>
       }
 
-      if (item.count > 0) {
+      if (count > 0) {
          return (
             <>
-               <Button variant="outline" size="icon" onClick={onRemoveFromCart}>
-                  {item.count === 1 ? (
+               <Button variant="outline" size="icon" onClick={() => onRemoveFromCart(count - 1)}>
+                  {count === 1 ? (
                      <X className="h-4" />
                   ) : (
                      <MinusIcon className="h-4" />
                   )}
                </Button>
                <Button disabled variant="ghost" size="icon">
-                  {item.count}
+                  {count}
                </Button>
                <Button
                   disabled={product.id == ''}
                   variant="outline"
                   size="icon"
-                  onClick={onAddToCart}
+                  onClick={() => onAddToCart(count + 1)}
                >
                   <PlusIcon className="h-4" />
-               </Button>
+               </Button >
             </>
          )
       }
@@ -154,7 +153,7 @@ export const Item = ({ cartItem }) => {
                   {product?.description}
                </p>
                <Price />
-               <CartButton />
+               <CartButton count={cartItem.count} />
             </div>
          </CardContent>
       </Card>

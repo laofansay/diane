@@ -11,6 +11,11 @@ import { useAppDispatch, useAppSelector } from '@/store/index';
 
 import { getEntities } from '@/app/shared/reducers/entities/product.reducer';
 
+import { getEntities as getBrandEntities } from '@/app/shared/reducers/entities/brand.reducer';
+
+import { getEntities as getCategoryEntities } from '@/app/shared/reducers/entities/category.reducer';
+
+
 import {
    AvailableToggle,
    BrandCombobox,
@@ -24,6 +29,10 @@ export default async function Products({ searchParams }) {
    const products = useAppSelector(state => state.product.entities);
    const loading = useAppSelector(state => state.product.loading);
 
+   const brands = useAppSelector(state => state.brand.entities);
+   const loading1 = useAppSelector(state => state.brand.loading);
+   const categories = useAppSelector(state => state.category.entities);
+   const loading2 = useAppSelector(state => state.category.loading);
 
    const { sort, isAvailable, brand, category, page = 1 } = searchParams ?? null
 
@@ -48,13 +57,13 @@ export default async function Products({ searchParams }) {
 
    useEffect(() => {
       getAllEntities();
+      getBrandEntities({ sort: "id,desc" });
+      getCategoryEntities({ sort: "id,desc" });
    }, [sort]);
 
 
-   const orderBy = getOrderBy(sort)
 
-   const brands = [{}]
-   const categories = [{}]
+
 
 
    return (
