@@ -24,6 +24,8 @@ export interface IProduct {
   shelvesDate?: dayjs.Dayjs | null;
   createdAt?: dayjs.Dayjs;
   updatedAt?: dayjs.Dayjs;
+  brand?: IBrand | null;
+  categories?: ICategory | null;
 }
 
 export const defaultValue: Readonly<IProduct> = {

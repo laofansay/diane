@@ -10,14 +10,13 @@ export interface IOrder {
   payable?: number;
   tax?: number;
   discount?: number;
-  isPaid?: boolean;
-  isCompleted?: boolean;
+  paid?: boolean;
+  completed?: boolean;
   createdAt?: dayjs.Dayjs;
   updatedAt?: dayjs.Dayjs;
-  refund?: IRefund | null;
 }
 
 export const defaultValue: Readonly<IOrder> = {
-  isPaid: false,
-  isCompleted: false,
+  paid: false,
+  completed: false,
 };
