@@ -1,20 +1,16 @@
+import { IProduct } from '@/app/shared/model/product.model'
 import { Separator } from '@/components/native/separator'
 import { Badge } from '@/components/ui/badge'
 import type { ProductWithIncludes } from '@/types/prisma'
 import Link from 'next/link'
-import { IProduct } from '@/app/shared/model/product.model'
 
 import CartButton from './cart_button'
 import WishlistButton from './wishlist_button'
 
-export const DataSection = async ({
-   product,
-}: {
-   product: IProduct
-}) => {
+export const DataSection = async ({ product }: { product: IProduct }) => {
    function Price() {
       if (product?.discount > 0) {
-         const price = product?.price * product?.discount / 100
+         const price = (product?.price * product?.discount) / 100
          return (
             <div className="flex gap-2 items-center">
                <Badge className="flex gap-4" variant="destructive">
@@ -57,7 +53,7 @@ export const DataSection = async ({
             <Price />
             <div className="flex gap-2">
                <CartButton product={product} />
-               <WishlistButton product={product} />
+               <WishlistButton id={product.id} />
             </div>
          </div>
       </div>

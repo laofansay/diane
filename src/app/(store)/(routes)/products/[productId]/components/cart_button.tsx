@@ -1,6 +1,9 @@
 'use client'
 
-import { createEntity, getEntity } from '@/app/shared/reducers/entities/cart-item.reducer'
+import {
+   createEntity,
+   getEntity,
+} from '@/app/shared/reducers/entities/cart-item.reducer'
 import { Spinner } from '@/components/native/icons'
 import { Button } from '@/components/ui/button'
 import { useAuthenticated } from '@/hooks/useAuthentication'
@@ -11,17 +14,16 @@ import { MinusIcon, PlusIcon, ShoppingBasketIcon, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export default function CartButton({ product }) {
-
-   const dispatch = useAppDispatch();
-   const cartItemEntity = useAppSelector(state => state.cartItem.entity);
-   const loading = useAppSelector(state => state.cartItem.loading);
+   const dispatch = useAppDispatch()
+   const cartItemEntity = useAppSelector((state) => state.cartItem.entity)
+   const loading = useAppSelector((state) => state.cartItem.loading)
 
    useEffect(() => {
-      dispatch(getEntity(product.id));
-   }, [product]);
+      dispatch(getEntity(8))
+   }, [product])
 
    if (loading) {
-      return <div>Loading...</div>; // 或者其他加载指示
+      return <div>Loading...</div> // 或者其他加载指示
    }
    return (
       <CartContextProvider>
@@ -31,22 +33,17 @@ export default function CartButton({ product }) {
 }
 
 export function ButtonComponent({ product, pcount }) {
+   const dispatch = useAppDispatch()
 
-   const dispatch = useAppDispatch();
-
-   const { cart, refreshCart, dispatchCart } = useCartContext()
-
-
-   const [count, setCount] = useState(pcount);
-   const updateSuccess = useAppSelector(state => state.cartItem.updateSuccess);
-   const cartItemEntity = useAppSelector(state => state.cartItem.entity);
-
+   const [count, setCount] = useState(pcount)
+   const updateSuccess = useAppSelector((state) => state.cartItem.updateSuccess)
+   const cartItemEntity = useAppSelector((state) => state.cartItem.entity)
 
    useEffect(() => {
       if (updateSuccess) {
-         setCount(cartItemEntity.count);
+         setCount(cartItemEntity.count)
       }
-   }, [updateSuccess]);
+   }, [updateSuccess])
 
    async function onAddToCart() {
       try {
@@ -54,35 +51,33 @@ export function ButtonComponent({ product, pcount }) {
             ...cartItemEntity,
             prodId: product.id,
             cid: 0,
-            count: count + 1
-         };
-         dispatch(createEntity(entity));
+            count: count + 1,
+         }
+         dispatch(createEntity(entity))
       } catch (error) {
          console.error({ error })
       }
    }
 
    async function onRemoveFromCart() {
-
       try {
          const entity = {
             ...cartItemEntity,
             prodId: product.id,
             cid: 0,
-            count: count - 1
-         };
-         dispatch(createEntity(entity));
-
+            count: count - 1,
+         }
+         dispatch(createEntity(entity))
       } catch (error) {
          console.error({ error })
       }
    }
 
-
    if (count === 0) {
       return (
          <Button className="flex gap-2" onClick={onAddToCart}>
-            <ShoppingBasketIcon className="h-4" /> Add to Cart {cartItemEntity.count}
+            <ShoppingBasketIcon className="h-4" /> Add to Cart{' '}
+            {cartItemEntity.count}
          </Button>
       )
    }

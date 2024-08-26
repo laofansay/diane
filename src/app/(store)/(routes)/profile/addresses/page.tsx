@@ -9,7 +9,6 @@ import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
 
 import { UserCombobox } from '../components/switcher'
 import { AddressTable } from './components/table'

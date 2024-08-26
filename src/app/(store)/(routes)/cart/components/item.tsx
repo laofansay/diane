@@ -3,11 +3,7 @@
 import { createEntity } from '@/app/shared/reducers/entities/cart-item.reducer'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-   Card,
-   CardContent,
-   CardHeader,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { MinusIcon, PlusIcon, X } from 'lucide-react'
 import Image from 'next/image'
@@ -15,18 +11,17 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export const Item = ({ cartItem }) => {
-
    const { product } = cartItem
-   const dispatch = useAppDispatch();
+   const dispatch = useAppDispatch()
    //current product cart count;
-   const updateSuccess = useAppSelector(state => state.cartItem.updateSuccess);
-   const cartItemEntity = useAppSelector(state => state.cartItem.entity);
+   const updateSuccess = useAppSelector((state) => state.cartItem.updateSuccess)
+   const cartItemEntity = useAppSelector((state) => state.cartItem.entity)
 
    useEffect(() => {
       if (updateSuccess) {
          //setItem(cartItemEntity);
       }
-   }, [updateSuccess]);
+   }, [updateSuccess])
 
    async function onAddToCart(count: number) {
       try {
@@ -34,42 +29,29 @@ export const Item = ({ cartItem }) => {
             ...cartItem,
             prodId: product.id,
             cid: cartItem.cid,
-            count: count
-         };
-         dispatch(createEntity(entity));
+            count: count,
+         }
+         dispatch(createEntity(entity))
       } catch (error) {
          console.error({ error })
       }
    }
 
    async function onRemoveFromCart(count: number) {
-
       try {
          const entity = {
             ...cartItem,
             prodId: product.id,
             cid: cartItem.cid,
-            count: count
-         };
-         dispatch(createEntity(entity));
-
+            count: count,
+         }
+         dispatch(createEntity(entity))
       } catch (error) {
          console.error({ error })
       }
    }
 
-   function findLocalCartIndexById(array: { length: number; items: { productId: any }[] }, productId: any) {
-      for (let i = 0; i < array.length; i++) {
-         if (array?.items[i]?.productId === productId) {
-            return i
-         }
-      }
-      return -1
-   }
-
-
    function CartButton({ count }) {
-
       if (count === 0) {
          return <Button onClick={() => onAddToCart(1)}>🛒 Add to Cart</Button>
       }
@@ -77,7 +59,11 @@ export const Item = ({ cartItem }) => {
       if (count > 0) {
          return (
             <>
-               <Button variant="outline" size="icon" onClick={() => onRemoveFromCart(count - 1)}>
+               <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => onRemoveFromCart(count - 1)}
+               >
                   {count === 1 ? (
                      <X className="h-4" />
                   ) : (
@@ -94,7 +80,7 @@ export const Item = ({ cartItem }) => {
                   onClick={() => onAddToCart(count + 1)}
                >
                   <PlusIcon className="h-4" />
-               </Button >
+               </Button>
             </>
          )
       }
@@ -102,7 +88,7 @@ export const Item = ({ cartItem }) => {
 
    function Price() {
       if (product?.discount > 0) {
-         const price = product?.price * product?.discount / 100
+         const price = (product?.price * product?.discount) / 100
          return (
             <div className="flex gap-2 items-center">
                <Badge className="flex gap-4" variant="destructive">
@@ -121,7 +107,6 @@ export const Item = ({ cartItem }) => {
          <CardHeader className="p-0 md:hidden">
             <div className="relative h-32 w-full">
                <Link href={`/products/${product?.id}`}>
-
                   <Image
                      className="rounded-t-lg"
                      src={product?.images[0]}

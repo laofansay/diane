@@ -1,33 +1,30 @@
 'use client'
+
+import { getEntity } from '@/app/shared/reducers/entities/product.reducer'
 import Carousel from '@/components/native/Carousel'
 import { isVariableValid } from '@/lib/utils'
+import { useAppDispatch, useAppSelector } from '@/store'
 import { ChevronRightIcon } from 'lucide-react'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 import { DataSection } from './components/data'
-import { useAppDispatch, useAppSelector } from '@/store'
-import { useEffect } from 'react'
-import { getEntity } from '@/app/shared/reducers/entities/product.reducer'
 
 type Props = {
    params: { productId: string }
    searchParams: { [key: string]: string | string[] | undefined }
 }
 
-
 export default async function Product({
    params,
 }: {
    params: { productId: number }
 }) {
-
-   const dispatch = useAppDispatch();
+   const dispatch = useAppDispatch()
    useEffect(() => {
-      dispatch(getEntity(params.productId));
-   }, []);
-   const product = useAppSelector(state => state.product.entity);
-
-
+      dispatch(getEntity(params.productId))
+   }, [])
+   const product = useAppSelector((state) => state.product.entity)
 
    if (isVariableValid(product)) {
       return (
@@ -43,15 +40,18 @@ export default async function Product({
 }
 
 const ImageColumn = ({ product }) => {
-   let images = product?.images;
+   let images = product?.images
    // 检查 images 是否为数组
    if (!Array.isArray(images)) {
       if (typeof images === 'string') {
          // 如果是字符串，则将其转换为数组
-         images = [images];
+         images = [images]
       } else {
-         console.error('Expected images to be an array or a string but received:', images);
-         return <div>No images available</div>;
+         console.error(
+            'Expected images to be an array or a string but received:',
+            images
+         )
+         return <div>No images available</div>
       }
    }
 

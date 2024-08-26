@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(store)/(routes)/products/page": [
+    "/(store)/(routes)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/products/page.js"
+      "static/chunks/app/(store)/(routes)/page.js"
     ],
     "/(store)/layout": [
       "static/chunks/webpack.js",
@@ -26,10 +26,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/login/page.js"
     ],
-    "/(store)/(routes)/page": [
+    "/(store)/(routes)/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(store)/(routes)/page.js"
+      "static/chunks/app/(store)/(routes)/products/page.js"
+    ],
+    "/(store)/(routes)/products/[productId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(store)/(routes)/products/[productId]/page.js"
+    ],
+    "/(store)/(routes)/cart/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(store)/(routes)/cart/page.js"
     ]
   }
 }
