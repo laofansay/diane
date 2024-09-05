@@ -21,13 +21,17 @@ export default async function Product({
    params: { productId: number }
 }) {
    const dispatch = useAppDispatch()
+
    useEffect(() => {
       dispatch(getEntity(params.productId))
    }, [])
    const product = useAppSelector((state) => state.product.entity)
+   const loading = useAppSelector((state) => state.product.loading)
 
-   if (isVariableValid(product)) {
-      return (
+   return (
+      loading ? (
+         <div>Loading...</div>
+      ) : (
          <>
             <Breadcrumbs product={product} />
             <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -36,8 +40,9 @@ export default async function Product({
             </div>
          </>
       )
-   }
+   );
 }
+
 
 const ImageColumn = ({ product }) => {
    let images = product?.images

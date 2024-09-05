@@ -121,8 +121,8 @@ export const WishlistSlice = createEntitySlice({
                         ? -1
                         : 1
                      : b[predicate] < a[predicate]
-                       ? -1
-                       : 1
+                        ? -1
+                        : 1
                }),
             }
          })

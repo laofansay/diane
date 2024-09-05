@@ -1,11 +1,13 @@
 import { IProduct } from '@/app/shared/model/product.model'
 import { Separator } from '@/components/native/separator'
 import { Badge } from '@/components/ui/badge'
-import type { ProductWithIncludes } from '@/types/prisma'
-import Link from 'next/link'
+
 
 import CartButton from './cart_button'
 import WishlistButton from './wishlist_button'
+
+
+import ProdFav from './prod_fav'
 
 export const DataSection = async ({ product }: { product: IProduct }) => {
    function Price() {
@@ -47,14 +49,16 @@ export const DataSection = async ({ product }: { product: IProduct }) => {
          </div>
          <Separator />
          <small>{product.description}</small>
+         <small>-----{product.id}</small>
 
          <Separator />
          <div className="block space-y-2">
             <Price />
             <div className="flex gap-2">
                <CartButton product={product} />
-               <WishlistButton id={product.id} />
+               <ProdFav product={product} />
             </div>
+
          </div>
       </div>
    )

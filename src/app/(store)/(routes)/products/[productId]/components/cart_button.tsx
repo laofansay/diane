@@ -19,7 +19,7 @@ export default function CartButton({ product }) {
    const loading = useAppSelector((state) => state.cartItem.loading)
 
    useEffect(() => {
-      dispatch(getEntity(8))
+      dispatch(getEntity(product.id))
    }, [product])
 
    if (loading) {
