@@ -1,31 +1,30 @@
 'use client'
 
+import { getEntities } from '@/app/shared/reducers/entities/cart-item.reducer'
 import { Card, CardContent } from '@/components/ui/card'
 import { isVariableValid } from '@/lib/utils'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { useEffect } from 'react'
 
 import { Item } from './item'
 import { Receipt } from './receipt'
 import { Skeleton } from './skeleton'
-import { useAppDispatch, useAppSelector } from '@/store'
-import { getEntities } from '@/app/shared/reducers/entities/cart-item.reducer'
-import { useEffect } from 'react'
 
 export const CartGrid = () => {
+   const dispatch = useAppDispatch()
 
-   const dispatch = useAppDispatch();
-
-   const cartList = useAppSelector(state => state.cartItem.entities);
+   const cartList = useAppSelector((state) => state.cartItem.entities)
    const getAllEntities = () => {
       dispatch(
          getEntities({
             sort: `id,desc`,
-         }),
-      );
-   };
+         })
+      )
+   }
 
    useEffect(() => {
-      getAllEntities();
-   }, []);
+      getAllEntities()
+   }, [])
 
    if (cartList?.length === 0) {
       return (
@@ -47,11 +46,11 @@ export const CartGrid = () => {
          <div className="md:col-span-2">
             {isVariableValid(cartList)
                ? cartList.map((cartItem, index) => (
-                  <Item cartItem={cartItem} key={index} />
-               ))
+                    <Item cartItem={cartItem} key={index} />
+                 ))
                : [...Array(5)].map((cartItem, index) => (
-                  <Skeleton key={index} />
-               ))}
+                    <Skeleton key={index} />
+                 ))}
          </div>
          <Receipt carts={cartList} />
       </div>

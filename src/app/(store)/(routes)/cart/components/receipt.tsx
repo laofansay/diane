@@ -9,14 +9,14 @@ import { useCartContext } from '@/state/Cart'
 import Link from 'next/link'
 
 export function Receipt({ carts }) {
-
    function calculatePayableCost() {
       let totalAmount = 0,
          discountAmount = 0
 
       for (const item of carts) {
-         totalAmount += item?.count * item?.product?.price * item.product?.discount / 100
-         discountAmount += item?.count * (100 - item?.product?.discount) / 100
+         totalAmount +=
+            (item?.count * item?.product?.price * item.product?.discount) / 100
+         discountAmount += (item?.count * (100 - item?.product?.discount)) / 100
       }
 
       const afterDiscountAmount = totalAmount
@@ -60,15 +60,8 @@ export function Receipt({ carts }) {
          </CardContent>
          <Separator />
          <CardFooter>
-            <Link
-               href={'/checkout'}
-               className="w-full"
-            >
-               <Button
-                  disabled={carts.length === 0
-                  }
-                  className="w-full"
-               >
+            <Link href={'/checkout'} className="w-full">
+               <Button disabled={carts.length === 0} className="w-full">
                   Checkout
                </Button>
             </Link>
