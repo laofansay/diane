@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 node_modules
-
+/.next/*
 # dependencies
 /.pnp
 .pnp.js
@@ -27,7 +27,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
-.next
+
 .history
 .github
 
@@ -40,4 +40,6 @@ yarn.lock
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.next
+/.next/
+
+

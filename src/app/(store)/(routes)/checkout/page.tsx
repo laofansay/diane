@@ -1,9 +1,8 @@
 'use client'
 
 import { IProduct } from '@/app/shared/model/product.model'
+import { getEntities as getAddressEntities } from '@/app/shared/reducers/entities/address.reducer'
 import { getEntities } from '@/app/shared/reducers/entities/cart-item.reducer'
-import { Heading } from '@/components/native/heading'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
    Card,
@@ -12,8 +11,18 @@ import {
    CardHeader,
    CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import {
+   Drawer,
+   DrawerClose,
+   DrawerContent,
+   DrawerDescription,
+   DrawerFooter,
+   DrawerHeader,
+   DrawerOverlay,
+   DrawerPortal,
+   DrawerTitle,
+   DrawerTrigger,
+} from '@/components/ui/drawer'
 import {
    Select,
    SelectContent,
@@ -21,45 +30,34 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select'
-import { CartContextProvider } from '@/state/Cart'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { Label } from '@radix-ui/react-label'
-import { MinusIcon, PlusIcon, X } from 'lucide-react'
+import { Bookmark, Minus, MinusIcon, PlusIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+import { AddressForm } from './components/address-form'
 import Price from './components/price'
 import { Receipt } from './components/receipt'
 
 export default function CheckoutPage() {
-   const [paymentMethod, setPaymentMethod] = useState('credit-card')
-
-   const orderItems = [
-      { name: '商品 1', price: 99.99, quantity: 2 },
-      { name: '商品 2', price: 49.99, quantity: 1 },
-   ]
-
-   const subtotal = orderItems.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-   )
-   const shipping = 10
-   const total = subtotal + shipping
-
    const dispatch = useAppDispatch()
 
+   const addressList = useAppSelector((state) => state.address.entities)
+   const loading = useAppSelector((state) => state.address.loading)
    const cartList = useAppSelector((state) => state.cartItem.entities)
-   const getAllEntities = () => {
+
+   useEffect(() => {
+      dispatch(
+         getAddressEntities({
+            sort: `id,desc`,
+         })
+      )
       dispatch(
          getEntities({
             sort: `id,desc`,
          })
       )
-   }
-
-   useEffect(() => {
-      getAllEntities()
    }, [])
 
    function CartButton({ count }) {
@@ -94,7 +92,57 @@ export default function CheckoutPage() {
             <CardHeader>
                <h2>收货地址</h2>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent className=" flex flex-2 gap-2">
+               <Select>
+                  <SelectTrigger className="w-[280px]">
+                     <SelectValue placeholder="Select a timezone" />
+                  </SelectTrigger>
+                  <SelectContent>
+                     {addressList.map((addr) => (
+                        <SelectItem key={addr.id} value={addr.id}>
+                           <span className="flex flex-row content-between w-auto">
+                              <h3 className="items-start">
+                                 {addr.city + '  ' + addr.address}
+                              </h3>
+                              {addr.master ? (
+                                 <Bookmark
+                                    size={18}
+                                    color="red"
+                                    fill="red"
+                                    className="items-end"
+                                 />
+                              ) : (
+                                 <h3 className="items-end">-</h3>
+                              )}
+                           </span>
+                        </SelectItem>
+                     ))}
+                  </SelectContent>
+               </Select>
+
+               <Drawer>
+                  <DrawerTrigger asChild>
+                     <Button disabled={loading}>add new Address</Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="right-0 left-auto h-full w-96">
+                     {/* 设置Drawer从左侧滑出 */}
+                     <div className="mx-auto w-full max-w-sm">
+                        <DrawerHeader>
+                           <DrawerTitle>Move Goal</DrawerTitle>
+                           <DrawerDescription>
+                              Set your daily activity goal.
+                           </DrawerDescription>
+                        </DrawerHeader>
+                        <AddressForm />
+                        <DrawerFooter>
+                           <DrawerClose asChild>
+                              <Button variant="outline">Cancel</Button>
+                           </DrawerClose>
+                        </DrawerFooter>
+                     </div>
+                  </DrawerContent>
+               </Drawer>
+            </CardContent>
          </Card>
 
          <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -135,7 +183,7 @@ export default function CheckoutPage() {
                            <p className="text-xs text-muted-foreground text-justify">
                               {cartItem.product?.description}
                            </p>
-                           <Price product={cartItem.product}></Price>
+                           <Price product={cartItem.product} />
                            <CartButton count={cartItem.count} />
                         </div>
                      </CardContent>

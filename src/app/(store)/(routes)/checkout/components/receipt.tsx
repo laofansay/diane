@@ -6,13 +6,21 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import Link from 'next/link'
 import { useState } from 'react'
 
 export function Receipt({ carts }) {
    const [paymentMethod, setPaymentMethod] = useState('credit-card')
 
-   const total = 100
+   const handleCheckOut = async () => {
+      try {
+         await fetch(`/api/address/${params.addressId}`, {
+            method: 'DELETE',
+            cache: 'no-store',
+         })
+      } catch (error: any) {
+      } finally {
+      }
+   }
 
    function calculatePayableCost() {
       let totalAmount = 0,
@@ -108,11 +116,13 @@ export function Receipt({ carts }) {
 
          <Separator />
          <CardFooter>
-            <Link href={'/checkout'} className="w-full">
-               <Button disabled={carts.length === 0} className="w-full">
-                  确认支付 ¥{calculatePayableCost().payableAmount}
-               </Button>
-            </Link>
+            <Button
+               disabled={carts.length === 0}
+               className="w-full"
+               onClick={() => handleCheckOut()}
+            >
+               确认支付 ¥{calculatePayableCost().payableAmount}
+            </Button>
          </CardFooter>
       </Card>
    )

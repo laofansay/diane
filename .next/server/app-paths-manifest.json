@@ -1,4 +1,0 @@
-{
-  "/(store)/(routes)/checkout/page": "app/(store)/(routes)/checkout/page.js",
-  "/(store)/(routes)/cart/page": "app/(store)/(routes)/cart/page.js"
-}
