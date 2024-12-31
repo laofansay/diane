@@ -1,26 +1,40 @@
 'use client'
 
+import { createEntity } from '@/app/shared/reducers/entities/order.reducer'
 import { Separator } from '@/components/native/separator'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '@/store'
+import router from 'next/router'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 export function Receipt({ carts }) {
+   const dispatch = useAppDispatch()
+
+   const updating = useAppSelector((state) => state.order.updating)
+   const updateSuccess = useAppSelector((state) => state.order.updateSuccess)
+
    const [paymentMethod, setPaymentMethod] = useState('credit-card')
 
    const handleCheckOut = async () => {
-      try {
-         await fetch(`/api/address/${params.addressId}`, {
-            method: 'DELETE',
-            cache: 'no-store',
-         })
-      } catch (error: any) {
-      } finally {
+      const entity = {
+         address: {},
+         carts: [],
+         paymentMethod: '',
       }
+      dispatch(createEntity(entity))
    }
+
+   useEffect(() => {
+      if (updateSuccess) {
+         router.push(`/profile/addresses`)
+         toast.success('订单已他对，请支付')
+      }
+   }, [updateSuccess])
 
    function calculatePayableCost() {
       let totalAmount = 0,

@@ -56,9 +56,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
    const [loading, setLoading] = useState(false)
 
    const dispatch = useAppDispatch()
-   const addressEntity = useAppSelector((state) => state.address.entity)
-   const updating = useAppSelector((state) => state.address.updating)
-   const updateSuccess = useAppSelector((state) => state.address.updateSuccess)
+   const addressEntity = useAppSelector((state) => state.order.entity)
+   const updating = useAppSelector((state) => state.order.updating)
+   const updateSuccess = useAppSelector((state) => state.order.updateSuccess)
 
    const title = isEditing ? 'Edit address' : 'Create address'
    const description = isEditing ? 'Edit a address.' : 'Add a new address'
@@ -77,6 +77,15 @@ export const AddressForm: React.FC<AddressFormProps> = ({
          postalCode: '',
       },
    })
+
+   useEffect(() => {
+      if (updateSuccess) {
+         setLoading(true)
+         router.push(`/profile/addresses`)
+         toast.success(toastMessage)
+         setLoading(false)
+      }
+   }, [updateSuccess])
 
    const onSubmit = (values) => {
       if (values.id !== undefined && typeof values.id !== 'number') {
@@ -278,9 +287,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                      />
                   </div>
                </div>
-               <Button disabled={updating} className="ml-auto" type="submit">
-                  {action}
-               </Button>
+               <div className="flex  ">
+                  <Button
+                     disabled={updating}
+                     className="justify-center"
+                     type="submit"
+                  >
+                     {action}
+                  </Button>
+                  <Button className="justify-center"> 返回</Button>
+               </div>
             </form>
          </Form>
       </>

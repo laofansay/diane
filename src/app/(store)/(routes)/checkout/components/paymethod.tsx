@@ -15,6 +15,17 @@ import { useState } from 'react'
 export function PayMethod({}) {
    const [paymentMethod, setPaymentMethod] = useState('credit-card')
 
+   const handlePayment = async () => {
+      try {
+         await fetch(`/api/address/${params.addressId}`, {
+            method: 'DELETE',
+            cache: 'no-store',
+         })
+      } catch (error: any) {
+      } finally {
+      }
+   }
+
    const total = 100
    return (
       <Card>
@@ -57,7 +68,9 @@ export function PayMethod({}) {
             )}
          </CardContent>
          <CardFooter>
-            <Button className="w-full">确认支付 ¥{total.toFixed(2)}</Button>
+            <Button className="w-full" onClick={handlePayment}>
+               确认支付 ¥{total.toFixed(2)}
+            </Button>
          </CardFooter>
       </Card>
    )

@@ -1,58 +1,59 @@
 'use client'
 
+import { login } from '@/app/shared/reducers/authentication'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn, isVariableValid } from '@/lib/utils'
+import { RootState, useAppDispatch, useAppSelector } from '@/store/index'
 import { Loader, MailIcon, SmartphoneIcon } from 'lucide-react'
-import React, { useState, useEffect } from 'react';
-
-import { RootState, useAppDispatch, useAppSelector } from '@/store/index';
-
-import { login } from '@/app/shared/reducers/authentication';
-
-import { usePathname, useRouter } from "next/navigation";
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, SubmitHandler } from 'react-hook-form';
-
-import { Form } from 'reactstrap'
 import { Main } from 'next/document'
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { Form } from 'reactstrap'
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type LoginFormInputs = {
-   username: string;
-   password: string;
-   rememberMe: boolean;
-};
-
+   username: string
+   password: string
+   rememberMe: boolean
+}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+   const dispatch = useAppDispatch()
+   const isAuthenticated = useAppSelector(
+      (state) => state.authentication.isAuthenticated
+   )
+   const loginError = useAppSelector((state) => state.authentication.loginError)
+   const showModalLogin = useAppSelector(
+      (state) => state.authentication.showModalLogin
+   )
 
-   const dispatch = useAppDispatch();
-   const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
-   const loginError = useAppSelector(state => state.authentication.loginError);
-   const showModalLogin = useAppSelector(state => state.authentication.showModalLogin);
-
-   const authenticationState = useSelector((state: RootState) => state.authentication);
-   const router = useRouter();
+   const authenticationState = useSelector(
+      (state: RootState) => state.authentication
+   )
+   const router = useRouter()
 
    if (authenticationState.isAuthenticated) {
-      return router.push("/");
+      return router.push('/')
    }
 
-   const { register, handleSubmit, formState: { errors } } = useForm < LoginFormInputs > ();
-   const onSubmit: SubmitHandler<LoginFormInputs> = data => {
-      dispatch(login(data.username, data.password, data.rememberMe));
-   };
-
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<LoginFormInputs>()
+   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+      dispatch(login(data.username, data.password, data.rememberMe))
+   }
 
    return (
       <main>
          <div className={cn('grid gap-6', className)} {...props}>
-            <div>
-               login error
-            </div>
+            <div>login error</div>
             <form onSubmit={handleSubmit(onSubmit)}>
                <div className="grid gap-1">
                   <Label
@@ -80,7 +81,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                      Password
                   </Label>
                   <Input
-
                      {...register('password', { required: '密码不能为空!' })}
                      id="password"
                      placeholder="password"
@@ -111,7 +111,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   />
                </div>
                <Button color="primary" type="submit" data-cy="submit">
-                  {isAuthenticated && <Loader className="mr-2 h-4 animate-spin" />}
+                  {isAuthenticated && (
+                     <Loader className="mr-2 h-4 animate-spin" />
+                  )}
                   Login with Email
                </Button>
             </form>
@@ -129,5 +131,3 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       </main>
    )
 }
-
-
